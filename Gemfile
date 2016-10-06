@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.2'
+ruby '2.3.1'
 
 # App runner
 gem 'foreman'
@@ -47,17 +47,14 @@ gem 'turbolinks'
 # UX building blocks
 gem 'bootstrap-sass'
 
-
 gem 'omniauth' # Authentication
 gem 'omniauth-github'
 gem 'cancan'   # Authorisation
-
 
 # Debugger
 gem 'pry'
 gem 'pry-nav'
 gem 'pry-doc'
-
 
 group :test do
   gem 'guard-rspec'    # Continuous testing

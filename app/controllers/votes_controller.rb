@@ -33,6 +33,6 @@ class VotesController < ApplicationController
   end
 
   def _notify_movie_creator
-    MovieEventsNotifier.movie_voted(_movie, current_user, _type).deliver
+    MovieEventsNotifier.delay.movie_voted(_movie, current_user, _type)
   end
 end

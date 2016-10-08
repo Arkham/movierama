@@ -46,8 +46,10 @@ RSpec.describe VotesController, :type => :controller do
     end
 
     it "notifies the event" do
-      email = double(:email, deliver: true)
-      expect(MovieEventsNotifier).to receive(:movie_voted).with(movie, user, :like).and_return(email)
+      delayed_mailer = double(:delayed_mailer)
+
+      allow(MovieEventsNotifier).to receive(:delay).and_return(delayed_mailer)
+      expect(delayed_mailer).to receive(:movie_voted).with(movie, user, :like)
 
       get :create, movie_id: movie.id, t: 'like'
     end

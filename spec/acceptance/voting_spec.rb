@@ -1,5 +1,7 @@
 require 'rails_helper'
 require 'capybara/rails'
+require 'capybara/email/rspec'
+require 'sidekiq/testing'
 require 'support/pages/movie_list'
 require 'support/pages/movie_new'
 require 'support/with_user'
@@ -23,6 +25,12 @@ RSpec.describe 'vote on movies', type: :feature do
       date:         '1980-05-21',
       user:         author
     )
+  end
+
+  around do |example|
+    Sidekiq::Testing.inline! do
+      example.run
+    end
   end
 
   context 'when logged out' do

@@ -61,4 +61,5 @@ group :test do
   gem 'rspec-rails'    # Test framework with Rail extensions
   gem 'poltergeist'    # Driver for PhantomJS headless browser
   gem 'capybara'       # DSL for browser control
+  gem 'capybara-email' # Test emails too
 end

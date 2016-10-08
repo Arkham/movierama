@@ -16,7 +16,7 @@ class VotingBooth
     _update_counts
     self
   end
-  
+
   def unvote
     @movie.likers.delete(@user)
     @movie.haters.delete(@user)

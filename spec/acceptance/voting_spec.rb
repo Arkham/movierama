@@ -8,11 +8,15 @@ RSpec.describe 'vote on movies', type: :feature do
 
   let(:page) { Pages::MovieList.new }
 
-  before do
-    author = User.create(
-      uid:  'null|12345',
-      name: 'Bob'
+  let(:author) {
+    User.create(
+      uid:   'null|12345',
+      name:  'Bob',
+      email: 'bob@example.com'
     )
+  }
+
+  before do
     Movie.create(
       title:        'Empire strikes back',
       description:  'Who\'s scruffy-looking?',
@@ -40,9 +44,21 @@ RSpec.describe 'vote on movies', type: :feature do
       expect(page).to have_vote_message
     end
 
+    it 'liking a movie notifies the creator' do
+      page.like('Empire strikes back')
+      open_email(author.email)
+      expect(current_email.subject).to match(/Hurrah, your movie was liked/)
+    end
+
     it 'can hate' do
       page.hate('Empire strikes back')
       expect(page).to have_vote_message
+    end
+
+    it 'hating a movie notifies the creator' do
+      page.hate('Empire strikes back')
+      open_email(author.email)
+      expect(current_email.subject).to match(/Oopsies, your movie was hated/)
     end
 
     it 'can unlike' do
